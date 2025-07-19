@@ -13,7 +13,6 @@ const Hero = () => {
   const whyJoinThreeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // GSAP animations for hero
     const tl = gsap.timeline();
     tl.fromTo(heroRef.current?.children || [],
       { opacity: 0, y: 50 },
@@ -21,14 +20,14 @@ const Hero = () => {
     );
 
     gsap.fromTo(statsRef.current?.children || [],
-      { opacity: 0, scale: 0.5 },
+      { opacity: 0, scale: 0.8 },
       {
         opacity: 1,
         scale: 1,
         duration: 0.8,
-        stagger: 0.1,
-        ease: "back.out(1.7)",
-        delay: 1.5
+        stagger: 0.2,
+        ease: "elastic.out(1, 0.5)",
+        delay: 2.5
       }
     );
 
@@ -44,7 +43,6 @@ const Hero = () => {
       }
     );
 
-    // Three.js stars background for hero
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -94,7 +92,6 @@ const Hero = () => {
     };
   }, []);
 
-  // Separate Three.js background for "Why Join HWAI" section
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -105,7 +102,6 @@ const Hero = () => {
       whyJoinThreeRef.current.appendChild(renderer.domElement);
     }
 
-    // Create black-themed particles
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 2000;
     const positions = new Float32Array(particlesCount * 3);
@@ -149,8 +145,8 @@ const Hero = () => {
     if (whyJoinRef.current) {
       gsap.fromTo(
         whyJoinRef.current.children,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.3, ease: "power3.out" }
+        { opacity: 0, x: 50 },
+        { opacity: 1, x: 0, duration: 1, stagger: 0.3, ease: "power3.out" }
       );
     }
   }, []);
@@ -163,7 +159,6 @@ const Hero = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 pt-32 pb-20">
           <div ref={heroRef} className="text-center">
-            {/* Headline */}
             <div className="inline-flex items-center bg-gradient-to-r from-accent/20 to-purple-600/20 rounded-full px-4 py-2 mb-6 border border-accent/30 backdrop-blur-sm">
               <Sparkles className="w-4 h-4 text-accent mr-2" />
               <span className="text-sm text-gray-300">Empowering Human Potential in the AI Era</span>
@@ -179,8 +174,7 @@ const Hero = () => {
               Master the AI Readiness Skills framework and join a thriving community where humans and AI collaborate to unlock unprecedented potential.
             </p>
 
-            {/* CTA */}
-            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <button className="bg-gradient-to-r from-accent to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-600 hover:to-accent transition-all duration-300 transform hover:scale-105 flex items-center justify-center shadow-lg hover:shadow-accent/25">
                 Join Our Community
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -190,19 +184,22 @@ const Hero = () => {
               </button>
             </div>
 
-            {/* Community Initiatives - updated to 3 points */}
-            <div ref={statsRef} className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-700 max-w-2xl mx-auto">
-              <div className="text-center group">
-                <div className="text-3xl font-bold text-white group-hover:text-accent transition-colors duration-300">15K+</div>
-                <div className="text-gray-400 text-sm">Active Members</div>
+            {/* Community Initiatives */}
+            <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-gray-700 max-w-2xl mx-auto">
+              <div className="group relative p-4 bg-gradient-to-r from-accent to-purple-600 rounded-lg border border-accent/50 text-white transition-transform duration-300 hover:-translate-y-2">
+                <div className="absolute right-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-l-8 border-l-white"></div>
+                <div className="text-2xl font-bold">15K+</div>
+                <div className="text-sm">Active Members</div>
               </div>
-              <div className="text-center group">
-                <div className="text-3xl font-bold text-white group-hover:text-accent transition-colors duration-300">500+</div>
-                <div className="text-gray-400 text-sm">AI Projects</div>
+              <div className="group relative p-4 bg-gradient-to-r from-accent to-purple-600 rounded-lg border border-accent/50 text-white transition-transform duration-300 hover:-translate-y-2">
+                <div className="absolute right-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-l-8 border-l-white"></div>
+                <div className="text-2xl font-bold">500+</div>
+                <div className="text-sm">AI Projects</div>
               </div>
-              <div className="text-center group">
-                <div className="text-3xl font-bold text-white group-hover:text-accent transition-colors duration-300">98%</div>
-                <div className="text-gray-400 text-sm">Success Rate</div>
+              <div className="group relative p-4 bg-gradient-to-r from-accent to-purple-600 rounded-lg border border-accent/50 text-white transition-transform duration-300 hover:-translate-y-2">
+                <div className="absolute right-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-l-8 border-l-white"></div>
+                <div className="text-2xl font-bold">98%</div>
+                <div className="text-sm">Success Rate</div>
               </div>
             </div>
           </div>
@@ -213,25 +210,21 @@ const Hero = () => {
       <section className="relative min-h-screen overflow-hidden bg-black">
         <div ref={whyJoinThreeRef} className="absolute inset-0 z-0"></div>
 
-        <div ref={whyJoinRef} className="relative z-10 max-w-5xl mx-auto px-4 py-32 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">Why Join HWAI?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="glass-card rounded-2xl p-6 border border-accent/20 hover:border-accent/40 backdrop-blur-md transition-all duration-300 bg-white/5">
-              <Shield className="w-8 h-8 text-accent mx-auto mb-3" />
-              <p className="text-gray-300 text-lg">Stay safe & resilient against AI threats and challenges.</p>
-            </div>
-            <div className="glass-card rounded-2xl p-6 border border-accent/20 hover:border-accent/40 backdrop-blur-md transition-all duration-300 bg-white/5">
-              <TrendingUp className="w-8 h-8 text-accent mx-auto mb-3" />
-              <p className="text-gray-300 text-lg">Accelerate your career growth with hands-on AI projects.</p>
-            </div>
-            <div className="glass-card rounded-2xl p-6 border border-accent/20 hover:border-accent/40 backdrop-blur-md transition-all duration-300 bg-white/5">
-              <Target className="w-8 h-8 text-accent mx-auto mb-3" />
-              <p className="text-gray-300 text-lg">Gain clarity and focus to reach your personal AI goals.</p>
-            </div>
-            <div className="glass-card rounded-2xl p-6 border border-accent/20 hover:border-accent/40 backdrop-blur-md transition-all duration-300 bg-white/5">
-              <Brain className="w-8 h-8 text-accent mx-auto mb-3" />
-              <p className="text-gray-300 text-lg">Join a community that enhances your skills & mindset.</p>
-            </div>
+        <div ref={whyJoinRef} className="relative z-10 max-w-5xl mx-auto px-4 py-24 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Why Join HWAI?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[
+              { icon: Shield, text: "Stay safe & resilient against AI threats and challenges." },
+              { icon: TrendingUp, text: "Accelerate your career growth with hands-on AI projects." },
+              { icon: Target, text: "Gain clarity and focus to reach your personal AI goals." },
+              { icon: Brain, text: "Join a community that enhances your skills & mindset." },
+            ].map((item, idx) => (
+              <div key={idx} className="group relative p-4 bg-gradient-to-r from-accent to-purple-600 rounded-lg border border-accent/50 text-white transition-transform duration-300 hover:-translate-y-2">
+                <div className="absolute right-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-l-8 border-l-white"></div>
+                <item.icon className="w-8 h-8 text-white mx-auto mb-3" />
+                <p className="text-sm">{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

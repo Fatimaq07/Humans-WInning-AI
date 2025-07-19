@@ -36,7 +36,7 @@ const Header = () => {
     { name: 'Volunteer Corner', href: '/volunteer' }
   ];
 
- const isActive = (href: string) => location.pathname === href;
+  const isActive = (href: string) => location.pathname === href;
 
   return (
     <header
@@ -74,11 +74,42 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+
+            {/* 🔥 Join Community Button with Hand Animation */}
             <Link
               to="/auth"
-              className="ml-6 bg-gradient-to-r from-accent to-purple-600 text-white px-6 py-3 rounded-full hover:from-purple-600 hover:to-accent transition-all duration-300 transform hover:scale-105 font-medium shadow-lg hover:shadow-accent/25"
+              className="ml-6 bg-gradient-to-r from-accent to-purple-600 text-white px-6 py-3 rounded-full hover:from-purple-600 hover:to-accent transition-all duration-300 transform hover:scale-105 font-medium shadow-lg hover:shadow-accent/25 relative overflow-hidden"
+              onClick={() => {
+                const hand = document.getElementById("handPointer");
+                if (hand) {
+                  hand.style.opacity = "1";
+                  hand.style.transform = "translateX(0)";
+                  setTimeout(() => {
+                    hand.style.transform = "translateX(0) scale(0.9)";
+                    setTimeout(() => {
+                      hand.style.transform = "translateX(0) scale(1)";
+                      setTimeout(() => {
+                        hand.style.opacity = "0";
+                        hand.style.transform = "translateX(200%)";
+                      }, 500);
+                    }, 200);
+                  }, 700);
+                }
+              }}
             >
               Join Community
+
+              <img
+                id="handPointer"
+                src="/d7e88eaa52232561fc59c10449ce142f.png"
+                alt="Hand Pointer"
+                className="absolute top-0 right-0 w-12 pointer-events-none"
+                style={{
+                  opacity: 0,
+                  transform: "translateX(200%)",
+                  transition: "transform 0.8s ease, opacity 0.5s ease"
+                }}
+              />
             </Link>
           </nav>
 
